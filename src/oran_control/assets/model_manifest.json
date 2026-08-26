@@ -1,0 +1,10 @@
+{
+  "model_name": "oran-control-flow-additive",
+  "version": "0.1.0",
+  "filename": "flow_additive.pt",
+  "size_bytes": 3575659,
+  "sha256": "268a8ba42bd5ef01be115bbded41c78c169489eb0d10a4f6da0e5b6420cf8e6f",
+  "download_url": null,
+  "generation_logic_frozen_after": "05c_Final_Retry2_Independent_Confirmation",
+  "distribution": "bundled"
+}

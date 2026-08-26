@@ -1,0 +1,211 @@
+{
+  "version": "0.1",
+  "generator": "numeric_additive_flow_matching",
+  "constraints": {
+    "min_mean_throughput_embb": {
+      "guidance_scale": 1.5,
+      "status": "validated",
+      "source_experiment": "Constraint-Conditioned Consistency Audit FIXED SCALE",
+      "validated_range": {
+        "min_throughput_mbps": 9.0,
+        "max_throughput_mbps": 12.7,
+        "note": "Approximate validated guidance range from prior throughput quantile experiments."
+      }
+    },
+    "max_mean_buffer_embb": {
+      "guidance_scale": 1.5,
+      "status": "validated",
+      "source_experiment": "02_Buffer_Global_Calibration_and_Auto_Profile",
+      "validation": {
+        "core_min_csr": 0.9479166666666666,
+        "core_max_non_buffer_drift": 0.05670344705382983,
+        "core_max_throughput_drift": 0.061306015898784004,
+        "core_max_repair_rate": 0.053385416666666664
+      },
+      "validated_range": {
+        "min_supported_upper_bound_kb": 42.34545078124998,
+        "note": "Lower buffer bounds are executable but treated as stress/out-of-routine requests."
+      }
+    }
+  },
+  "interventions": {
+    "prb_allocation": {
+      "status": "validated",
+      "total_prbs": 50,
+      "supported_scheduler_labels": [
+        "RR",
+        "PF"
+      ],
+      "observed_training_allocations": [
+        {
+          "embb": 9,
+          "urllc": 41
+        },
+        {
+          "embb": 21,
+          "urllc": 29
+        },
+        {
+          "embb": 39,
+          "urllc": 11
+        },
+        {
+          "embb": 50,
+          "urllc": 0
+        }
+      ],
+      "validated_unseen_allocation": {
+        "embb": 30,
+        "urllc": 20
+      },
+      "source_experiment": "03_PRB_Intervention_and_Operator_Condition_API",
+      "runtime_per_sample_ms": 2.0756384840718023,
+      "stress_note": "30/20 -> 39/11 is retained as a stress/generalization test because the corresponding real-data response is heterogeneous."
+    }
+  },
+  "compositions": {
+    "throughput_and_buffer_embb": {
+      "status": "validated",
+      "operator_request": {
+        "min_mean_throughput_mbps": 10.0,
+        "max_mean_buffer_kb": 50.0
+      },
+      "validated_network_condition": {
+        "scheduler": "PF",
+        "embb_prbs": 30,
+        "urllc_prbs": 20
+      },
+      "executor": "profile_weighted_per_constraint_rms_guidance",
+      "component_scales": {
+        "throughput": 1.5,
+        "buffer": 1.5
+      },
+      "validation": {
+        "validation_pass": true,
+        "primary_request": {
+          "scheduler": "PF",
+          "embb_prbs": 30,
+          "urllc_prbs": 20,
+          "min_embb_throughput_mbps": 10.0,
+          "max_embb_buffer_kb": 50.0
+        },
+        "and_guided": {
+          "throughput_csr": 0.9895833333333334,
+          "buffer_csr": 0.9596354166666666,
+          "joint_csr": 0.94921875,
+          "non_target_drift": 0.12617567678292593,
+          "runtime_ms_per_sample": 6.368711590766907
+        },
+        "repair_rate": 0.052083333333333336
+      },
+      "stress_request": {
+        "throughput_mbps": 11.5,
+        "buffer_kb": 20.0,
+        "validation_role": "stress_only"
+      },
+      "source_experiment": "04_Compositional_AND_Constraints_and_Operator_Workflow"
+    }
+  },
+  "software": {
+    "api_version": "0.1",
+    "python": ">=3.8",
+    "runtime_dependencies": [
+      "numpy",
+      "torch"
+    ],
+    "reference_profile": "profiles/reference_profile.npz",
+    "generator_api": {
+      "status": "validated",
+      "public_objects": [
+        "NetworkCondition",
+        "NetworkRequest",
+        "ORANGenerator",
+        "GenerationResult"
+      ],
+      "reference_profile_size_mb": 0.6825933456420898,
+      "cluster_inference_accuracy": 0.5185136381604954,
+      "integration_test": {
+        "validation_pass": false,
+        "cluster_inference_accuracy": 0.5185136381604954,
+        "reference_profile_size_mb": 0.6825933456420898,
+        "n": 48,
+        "final_success_rate": 1.0,
+        "soft_guidance_success_rate": 0.9583333333333334,
+        "repair_rate": 0.041666666666666664,
+        "mean_runtime_ms": 368.35235853989917,
+        "median_runtime_ms": 363.66820335388184,
+        "support_high_rate": 0.1875,
+        "support_low_rate": 0.16666666666666666,
+        "consistency_good_rate": 0.16666666666666666,
+        "consistency_moderate_rate": 0.7083333333333334,
+        "consistency_low_rate": 0.125
+      },
+      "source_experiment": "05_OpenRAN_Generator_API_and_Verifier",
+      "context_resolution": {
+        "method": "latent_three_cluster_candidates",
+        "status": "validated",
+        "candidate_count": 3,
+        "user_cluster_input_required": false
+      },
+      "verifier_calibration": {
+        "method": "real_leave_one_out_quantiles",
+        "status": "validated",
+        "good_max_score": 1.1596708446741104,
+        "moderate_max_score": 2.317339400450387
+      },
+      "05b_validation": {
+        "verifier_calibration_pass": true,
+        "latent_resolution_pass": true,
+        "public_api_success_rate": 1.0,
+        "public_api_repair_rate": 0.041666666666666664,
+        "public_api_good_rate": 0.20833333333333334,
+        "public_api_moderate_rate": 0.375,
+        "public_api_low_rate": 0.4166666666666667,
+        "mean_runtime_ms": 1089.9511774381,
+        "validation_pass": true
+      },
+      "adaptive_consistency_retry": {
+        "status": "validated",
+        "trigger": "retry_only_when_selected_consistency_is_LOW",
+        "max_retries": 2,
+        "seed_stride": 10000,
+        "candidate_ranking": [
+          "constraint_success",
+          "consistency_label",
+          "no_emergency_repair",
+          "consistency_score"
+        ],
+        "validation": {
+          "fixed_max_retries": 2,
+          "n": 96,
+          "success_rate": 1.0,
+          "repair_rate": 0.020833333333333332,
+          "initial_low_rate": 0.3125,
+          "final_good_rate": 0.28125,
+          "final_moderate_rate": 0.65625,
+          "final_low_rate": 0.0625,
+          "retry_used_rate": 0.3125,
+          "second_retry_used_rate": 0.11458333333333333,
+          "mean_candidate_count": 4.28125,
+          "mean_runtime_ms": 1548.8322128852208,
+          "median_runtime_ms": 1110.3477478027344,
+          "p95_runtime_ms": 3315.5438899993896,
+          "validation_pass": true
+        },
+        "source_experiment": "05c_Final_Retry2_Independent_Confirmation"
+      },
+      "generation_logic_frozen_after": "05c_Final_Retry2_Independent_Confirmation"
+    }
+  },
+  "verifier": {
+    "consistency": {
+      "status": "validated",
+      "score_definition": "summary_z_mean + temporal_corr_error",
+      "good_max_score": 1.1596708446741104,
+      "moderate_max_score": 2.317339400450387,
+      "k_neighbors": 64,
+      "real_test_low_rate": 0.05401844532279315,
+      "source_experiment": "05b_Latent_Context_Resolution_and_Verifier_Calibration"
+    }
+  }
+}

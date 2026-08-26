@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oran-control"
+version = "0.1.0"
+description = "Operator-driven constraint-executable generative digital twin for Open RAN KPM generation"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "Apache-2.0"}
+authors = [
+  {name = "ORAN-Control Authors"}
+]
+dependencies = [
+  "numpy>=1.21",
+  "torch>=1.12"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7",
+  "jupyter>=1"
+]
+
+[project.scripts]
+oran-control = "oran_control.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+oran_control = ["assets/*.npz", "assets/*.json", "assets/*.pt"]
