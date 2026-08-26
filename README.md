@@ -166,10 +166,35 @@ The current release is validated primarily on the Open RAN Commercial Traffic Tw
 
 The software should not be interpreted as a universal causal simulator for arbitrary RAN systems.
 
-## Data
+## Data and Model Attribution
 
-The original Open RAN dataset is not redistributed in this repository.
+The pretrained model and data-derived calibration assets included in
+ORAN-Control were developed using the Open RAN Commercial Traffic
+Twinning Dataset by Bonati et al.
+
+The original dataset is not redistributed with ORAN-Control. Users
+interested in the source data should obtain it from the official
+dataset repository:
+
+https://github.com/wineslab/open-ran-commercial-traffic-twinning-dataset
+
+Please cite:
+
+L. Bonati, R. Shirkhani, C. Fiandrino, S. Maxenti, S. D'Oro,
+M. Polese, and T. Melodia,
+"Twinning Commercial Network Traces on Experimental Open RAN Platforms,"
+Proc. ACM WiNTECH, 2024.
+
+DOI: 10.1145/3636534.3697320
+
+The original dataset is distributed under the Creative Commons
+Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) license.
 
 ## License
 
-Apache-2.0.
+The ORAN-Control source code is licensed under the Apache License 2.0.
+
+The pretrained checkpoint and data-derived assets listed in
+`MODEL_LICENSE.md` are distributed under CC BY-SA 4.0.
+
+No original training dataset files are distributed with this repository.
