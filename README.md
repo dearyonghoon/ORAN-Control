@@ -160,6 +160,24 @@ The generation report includes:
 - emergency-repair usage
 - warnings when the request or generated trace is outside the preferred operating region
 
+## Reproducibility Experiments
+
+The research experiments are provided as modular Python scripts under
+[`experiments/`](experiments/README.md).
+
+They cover:
+
+- temporal and compositional service constraints
+- verifier discrimination diagnostics
+- strict leave-one-PRB-allocation-out evaluation
+- guidance strength versus non-target drift
+- scheduler and traffic-context robustness
+- training-seed robustness
+
+The experiment scripts use the same training, calibration, sampling, and
+evaluation protocols used to produce the reported results. The original
+training dataset is not redistributed.
+
 ## Validated Scope
 
 The current release is validated primarily on the Open RAN Commercial Traffic Twinning setting used in the accompanying research experiments.
